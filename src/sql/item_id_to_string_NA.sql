@@ -47,9 +47,19 @@ SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_ui
 ),
 
 client_items AS (
-SELECT id, name, upper(desc) desc FROM Items_client_items_armor
+--SELECT id, name, upper(desc) desc FROM Items_client_items_armor
+--UNION ALL
+SELECT id, name, upper(desc) desc FROM Items_client_items_armor_1
+UNION ALL
+SELECT id, name, upper(desc) desc FROM Items_client_items_armor_2
 UNION ALL
 SELECT id, name, upper(desc) desc FROM Items_client_items_etc
+UNION ALL
+SELECT id, name, upper(desc) desc FROM Items_client_items_etc_1
+UNION ALL
+SELECT id, name, upper(desc) desc FROM Items_client_items_etc_2
+UNION ALL
+SELECT id, name, upper(desc) desc FROM Items_client_items_luna
 UNION ALL
 SELECT id, name, upper(desc) desc FROM Items_client_items_misc
 )

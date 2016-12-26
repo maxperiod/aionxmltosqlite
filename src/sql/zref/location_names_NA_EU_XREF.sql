@@ -7,7 +7,8 @@ FROM ENG_Data_Strings_client_strings_level EU
 JOIN ENU_Data_Strings_client_strings_level NA
 ON EU.id = NA.id
 
-WHERE --NA.body <> EU.body
-length(NA.body) < 100
+WHERE length(NA.body) < 100 
+and length(EU.body) < 100
+--and NA.body <> EU.body
 
-order by EU.name
+order by different desc, EU.name

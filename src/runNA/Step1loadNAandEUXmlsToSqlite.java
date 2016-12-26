@@ -8,7 +8,7 @@ public class Step1loadNAandEUXmlsToSqlite {
 		String[] na = new String[3];
 		
 		na[0] = "northamerica.db"; 
-		na[1] = "d:\\Aion\\extract";
+		na[1] = "d:\\Aion\\extract_data";
 		na[2] = "d:\\Aion\\extract_l10n";
 		
 		LoadAionXmlToSqlite.main(na);		
