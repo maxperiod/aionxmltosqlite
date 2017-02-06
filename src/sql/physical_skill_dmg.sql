@@ -40,7 +40,16 @@ case when coalesce(effect1_reserved16, effect1_reserved22) = '0' then null
      else coalesce(effect1_reserved16, effect1_reserved22)
 end bonus_damage_condition,
 
-case when pvp_damage_ratio is null then '100%' else pvp_damage_ratio||'%' end pvp_modifier
+--effect1_acc_mod1, 
+effect1_acc_mod2, 
+--effect1_critical_prob_mod1,
+effect1_critical_prob_mod2,
+case when pvp_damage_ratio is null then '100%' else pvp_damage_ratio||'%' end pvp_modifier,
+
+case when effect1_reserved8 = 1 then '0.5x (33%), 1x (33%), 1.5x (33%)'
+    when effect1_reserved8 = 3 then '0.9x (25%), 1x (25%), 1.1x (50%)'
+    when effect1_reserved8 = 6 then '1x (66%), 2x (33%)'
+end random_damage_multiplier
 --,*
 FROM skills_client_skills skills
 left outer join
@@ -96,12 +105,13 @@ and effect1_type in (
 'BA'
 )
 )*/
---and (upper(substr(skills.name, 1, 3)) = 'CH_' or learn_class = 'CHANTER')
---and (upper(substr(skills.name, 1, 3)) = 'PR_' or learn_class = 'PRIEST')
---and (upper(substr(skills.name, 1, 3)) = 'KN_' or learn_class = 'KNIGHT')
---and (upper(substr(skills.name, 1, 3)) = 'RA_' or learn_class = 'RANGER')
-and (upper(substr(skills.name, 1, 3)) = 'AS_' or learn_class = 'ASSASSIN')
---and (upper(substr(skills.name, 1, 3)) = 'FI_' or learn_class = 'FIGHTER')
+--and (upper(substr(skills.name, 1, 3)) in ('CL_', 'CH_') or learn_class in ('CLERIC', 'CHANTER'))
+--and (upper(substr(skills.name, 1, 3)) in ('CL_', 'PR_') or learn_class in ('CLERIC', 'PRIEST'))
+--and (upper(substr(skills.name, 1, 3)) in ('FI_') or learn_class in ('WARRIOR', 'FIGHTER')) and coalesce(learn_class, '') <> 'KNIGHT'
+and (upper(substr(skills.name, 1, 3)) in ('WA_', 'KN_') or learn_class in ('WARRIOR', 'KNIGHT')) and coalesce(learn_class, '') <> 'FIGHTER'
+--and (upper(substr(skills.name, 1, 3)) in ('SC_','RA_') or learn_class in ('SCOUT', 'RANGER')) and coalesce(learn_class, '') <> 'ASSASSIN'
+--and (upper(substr(skills.name, 1, 3)) in ('SC_','AS_') or learn_class in ('SCOUT', 'ASSASSIN')) and coalesce(learn_class, '') <> 'RANGER'
+
 --and skill_group_name is not null
 --order by skills.desc, cast(chain_category_level as number)
 order by str_na.body, cast(chain_category_level as number), learn_class desc

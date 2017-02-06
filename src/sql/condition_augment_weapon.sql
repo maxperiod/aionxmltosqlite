@@ -2,48 +2,48 @@ DROP TABLE IF EXISTS _CONDITION_AUGMENT_WEAPON;
 CREATE TABLE _CONDITION_AUGMENT_WEAPON AS
 
 WITH client_strings AS (
-SELECT id, upper(name) name, body FROM client_strings_bm
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_bm
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_bmrestrict
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_bmrestrict
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_dic_etc
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_dic_etc
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_dic_item
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_dic_item
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_dic_monster
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_dic_monster
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_dic_people
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_dic_people
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_dic_place
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_dic_place
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_etc
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_etc
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_funcpet
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_funcpet
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_gossip
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_gossip
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_item
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_item
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_item2
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_item2
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_item3
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_item3
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_level
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_level
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_monster
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_monster
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_msg
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_msg
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_npc
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_npc
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_quest
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_quest
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_skill
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_skill
 UNION ALL
-SELECT id, upper(name) name, body FROM client_strings_ui
+SELECT id, upper(name) name, body FROM ENU_data_strings_client_strings_ui
 ),
 item_quality AS (
-SELECT lower(substr(name, 17)) quality, body FROM client_strings_item
+SELECT lower(substr(name, 17)) quality, body FROM ENU_data_strings_client_strings_item
 WHERE substr(name, 1, 16) = 'STR_ITEMQUALITY_'
 ),
 item_abyss_rank as (
@@ -52,17 +52,17 @@ id,
 CASE WHEN recommend_rank > usable_rank_min THEN recommend_rank
 ELSE usable_rank_min
 end actual_rank
-FROM client_items_etc
+FROM items_client_items_etc
 )
 /*,
 item_slot AS (
-SELECT lower(substr(name, 17)) quality, body FROM client_strings_item
+SELECT lower(substr(name, 17)) quality, body FROM ENU_data_strings_client_strings_item
 WHERE substr(name, 1, 16) = 'STR_ITEMQUALITY_'
 )*/
 
 SELECT 
-client_items_etc.id, 
-coalesce(client_strings.body, client_items_etc.desc) rarity, 
+items_client_items_etc.id, 
+coalesce(client_strings.body, items_client_items_etc.desc) rarity, 
 level,
 weapon_type,
 equipment_slots,
@@ -105,18 +105,18 @@ burn_on_attack,
 burn_on_defend
 
 FROM
-client_items_etc
+items_client_items_etc
 LEFT OUTER JOIN client_strings
-ON upper(client_items_etc.desc) = client_strings.name
+ON upper(items_client_items_etc.desc) = client_strings.name
 
 LEFT OUTER JOIN item_quality
-ON client_items_etc.quality = item_quality.quality
+ON items_client_items_etc.quality = item_quality.quality
 
 LEFT OUTER JOIN item_abyss_rank
-ON client_items_etc.id = item_abyss_rank.id
+ON items_client_items_etc.id = item_abyss_rank.id
 
 WHERE charge_level >= 1
-ORDER BY charge_way, client_items_etc.id --equipment_slots, level desc, charge_way 
+ORDER BY charge_way, items_client_items_etc.id --equipment_slots, level desc, charge_way 
 ;
 
 

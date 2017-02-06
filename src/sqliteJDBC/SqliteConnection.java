@@ -16,7 +16,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class SqliteConnection {
+import org.sqlite.SQLiteConfig;
+
+import JDBC.DBConnection;
+
+public class SqliteConnection implements DBConnection {
 		
 	private String path;
 	private Connection conn;
@@ -25,6 +29,8 @@ public class SqliteConnection {
        
 		Class.forName("org.sqlite.JDBC");
 		path = "jdbc:sqlite:" + filename;
+		SQLiteConfig config = new SQLiteConfig();
+		config.setEncoding(SQLiteConfig.Encoding.UTF16);
 	    conn = DriverManager.getConnection(path);
 	    if (conn != null) {
 	  
@@ -79,5 +85,11 @@ public class SqliteConnection {
 		br.close();
 		return executeQuery(sb.toString());
 	
+	}
+
+	@Override
+	public void disconnect() throws SQLException {
+		conn.close();
+		
 	}
 }
