@@ -62,15 +62,11 @@ public class TableStructure {
 	
 	public String toString(){
 		
+		/*
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("CREATE TABLE ");
-		/*
-		if (prefix != null){
-			sb.append(prefix);
-			sb.append('_');
-		}
-		*/
+		
 		sb.append(name);
 		sb.append(" (");
 		columns.forEach((key, value)->{			
@@ -82,6 +78,8 @@ public class TableStructure {
 		sb.delete(sb.length() - 2, sb.length());
 		sb.append(");");
 		return sb.toString();
+		*/
+		return TableStructureDDLGenerator.generateDDL(this, null);
 	}
 
 	

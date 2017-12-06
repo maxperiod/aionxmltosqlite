@@ -1,20 +1,14 @@
 --drop TABLE IF EXISTS _CONDITION_AUGMENT_ARMOR;
 --CREATE TABLE _CONDITION_AUGMENT_ARMOR AS
 
-WITH client_strings_NA AS (
-SELECT upper(name) name, body FROM strings
-where folder like '/ENU%'
-),
-client_strings_EU AS (
-SELECT upper(name) name, body FROM strings
-where folder like '/ENG%'
-),
-item_quality AS (
-SELECT lower(substr(name, 17)) quality, body FROM strings
+drop table if exists _item_quality;
+create temp table _item_quality AS 
+SELECT lower(substr(name, 17)) quality, body FROM _ENGLISH_STRINGS_NA_EU_XREF--strings
 WHERE substr(name, 1, 16) = 'STR_ITEMQUALITY_'
-AND folder like '/ENU%'
-),
-armor_union AS (
+--AND folder like '/ENU%'
+;
+
+with armor_union AS (
 
 SELECT 
 id,
@@ -51,10 +45,12 @@ WHERE substr(name, 1, 16) = 'STR_ITEMQUALITY_'
 
 SELECT 
 id, 
+/*
 case 
     when coalesce(na.body, armor_union.desc) = coalesce(eu.body, armor_union.desc) then coalesce(na.body, armor_union.desc)
     else coalesce(na.body, armor_union.desc) || ' / ' || coalesce(eu.body, armor_union.desc)
-end body, 
+end*/
+strings.body body, 
 level,
 CASE 
         WHEN CAST(actual_rank AS NUMBER) BETWEEN 1 AND 6
@@ -74,15 +70,18 @@ CASE
         WHEN CAST(actual_rank AS NUMBER) > 9
                 THEN (actual_rank - 9)||'th Dan'
 END recommend_rank,
-coalesce(weapon_type, case when armor_type <> 'no_armor' then armor_type else equipment_slots end) gear_type,
-
---equipment_slots,
-item_quality.body quality,
+--coalesce(weapon_type, case when armor_type <> 'no_armor' then armor_type else equipment_slots end) gear_type,
+--weapon_type, armor_type, 
+coalesce(weapon_type, armor_type ) gear_type, 
+equipment_slots,
+--item_quality.body quality,
 --price,
 --abyss_point,
+/*
 case when charge_way = 1 then 'Kinah'
     when charge_way = 2 then 'Abyss Points'
 end charge_way,
+*/
 charge_level,
 
 cast(charge_price1 * 500000 as integer) l1_full_charge_price,
@@ -99,15 +98,20 @@ burn_on_defend
 
 FROM
 armor_union--client_items_armor
+/*
 LEFT OUTER JOIN client_strings_NA na
 ON upper(armor_union.desc) = na.name
 
 LEFT OUTER JOIN client_strings_EU eu
 ON upper(armor_union.desc) = eu.name
+*/
+left join _ENGLISH_STRINGS_NA_EU_XREF strings
+on upper(armor_union.desc) = strings.upper_name
 
-LEFT OUTER JOIN item_quality
-ON armor_union.quality = item_quality.quality
+
+--LEFT OUTER JOIN item_quality
+--ON armor_union.quality = item_quality.quality
 
 WHERE charge_level >= 1
-ORDER BY charge_way desc, gear_type, level desc, armor_union.id --equipment_slots, level desc, charge_way 
+ORDER BY charge_way, /*gear_type,*/coalesce(weapon_type, 'zzz'), coalesce(armor_type, 'zzz'), equipment_slots, level desc, armor_union.id --equipment_slots, level desc, charge_way 
 ;

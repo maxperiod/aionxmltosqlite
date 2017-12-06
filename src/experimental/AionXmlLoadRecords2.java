@@ -3,6 +3,7 @@ package experimental;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 import java.util.logging.Logger;
 
@@ -45,6 +46,8 @@ public class AionXmlLoadRecords2 extends DefaultHandler {
 	
 	private Logger logger;
 	
+	private Set<String> DBMSReservedWords;
+	
 	//No filters, all attributes
 	//public AionXmlGetColumns3(LearnedXMLTree tree){
 	public AionXmlLoadRecords2(Map<String, TableStructure> tableStructures, DBConnection connection){
@@ -77,6 +80,10 @@ public class AionXmlLoadRecords2 extends DefaultHandler {
 		this.logger = logger;
 	}
 	
+	public void setDBMSReservedWords(Set<String> DBMSReservedWords){
+		this.DBMSReservedWords = DBMSReservedWords;
+	}
+	/*
 	private String generateSubTablePrefix(){
 		StringBuilder sb = new StringBuilder();
 		currentTable.forEach(table -> {
@@ -87,7 +94,7 @@ public class AionXmlLoadRecords2 extends DefaultHandler {
 		});
 		return sb.toString();
 	}
-	
+	*/
 	/*
 	public void startDocument(){	
 	}
@@ -136,8 +143,7 @@ public class AionXmlLoadRecords2 extends DefaultHandler {
 		//Element appears to be a table
 		String tableName = tablePrefix.toString() + prefix.toString() + name;
 		if (tableStructures.containsKey(tableName)){
-		//if (potentialTables.containsKey(name) && (tableLevel.isEmpty() || level - tableLevel.peek() != 1)){
-			//System.out.printf("%s %d\n", name, tableLevel.size());
+
 			String elementTag = tableStructures.get(tableName).getElementName();
 			if (printingEnabled) System.out.printf("Begin table %s at level %d. Expected %s as elements\n", prefix.toString() + name, level, elementTag);
 								
@@ -153,8 +159,7 @@ public class AionXmlLoadRecords2 extends DefaultHandler {
 		}
 		//Element appears to be a record of a table
 		else if (!currentTableStack.isEmpty() && currentTableStack.peek().getElementName().equals(name)){
-		//else if (currentElement != null && currentElement.equals(name)) {
-		//else if (!currentTable.isEmpty() && tableStructures.containsKey(currentTable.peek()) && tableStructures.get(currentTable.peek()).getElementName().equals(name)){		
+		
 			if (printingEnabled) System.out.printf("Begin reading record for table %s\n", prefix.toString() + currentTable.peek());
 			recordInsertionNumber ++;
 			//currentElement = name;
@@ -183,8 +188,7 @@ public class AionXmlLoadRecords2 extends DefaultHandler {
 		else if (!currentElement.isEmpty()){// != null){
 			if (printingEnabled) System.out.printf("Element %s\n", prefix.toString() + name);
 			characters = new StringBuilder();
-			//if (elementStack.peek().equals(name))
-			//System.out.printf("Begin column %s\n",  name);
+
 		}
 		
 		elementStack.push(name);
@@ -238,9 +242,7 @@ public class AionXmlLoadRecords2 extends DefaultHandler {
 		//Element appears to be a table
 		String tableName = tablePrefix.toString() + secondTablePrefix + prefix.toString() + name;
 		if (tableStructures.containsKey(tableName)){
-		//if (level == tableLevel.peek()){
-		//if (currentTable.peek().equals(name)){
-			//System.out.printf("end %s %d\n", name, tableLevel.size());
+
 			if (printingEnabled) System.out.printf("End table %s.\n", prefix.toString() + name);
 			
 			if (currentTableStack.size() > 1) recordInsertionNumber = recordInsertionNumberStack.pop();
@@ -255,15 +257,21 @@ public class AionXmlLoadRecords2 extends DefaultHandler {
 		
 		//Element appears to be a record of a table
 		else if (!currentElement.isEmpty()/* != null*/ && currentElement.peek().equals(name)){
-		//else if (!currentTable.isEmpty() && potentialTables.containsKey(currentTable.peek()) && potentialTables.get(currentTable.peek()).equals(name)){
+
 			if (printingEnabled) System.out.printf("Finished reading record for table %s\n", prefix.toString() + currentTable.peek());
 			
 			StringBuilder insertStatement = new StringBuilder();
 			insertStatement.append("INSERT INTO ");
+			insertStatement.append('\"');
 			insertStatement.append(tablePrefix + prefix.toString() + currentTable.peek());
+			insertStatement.append('\"');
 			insertStatement.append(" (");
 			currentItem.peek().forEach((K, V) -> {
-				insertStatement.append(K);				
+				/*if (DBMSReservedWords.contains(K.toUpperCase())) insertStatement.append(K + "_R");
+				else*/
+				insertStatement.append('\"');
+				insertStatement.append(K);
+				insertStatement.append('\"');
 				insertStatement.append(',');
 				
 			});
@@ -301,15 +309,9 @@ public class AionXmlLoadRecords2 extends DefaultHandler {
 		//Element appears to be a column
 		else if (currentElement != null && isTopLevelChecker.peek()){
 			if (printingEnabled) System.out.printf("End Element %s\n", prefix.toString() + name);
-			/*
-			if (isTopLevelChecker.peek()){
-				TableStructure structure = tableStructures.get(generateSubTablePrefix() + currentTable.peek());
-				if (structure != null) structure.addColumn(prefix + name);
-			}
-			*/
+			
 			if (!currentItem.isEmpty()) currentItem.peek().put(prefix.toString() + name, characters.toString());
-			//if (elementStack.peek().equals(name))
-			//System.out.printf("Begin column %s\n",  name);
+			
 		}
 	
 		level --;

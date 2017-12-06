@@ -8,8 +8,26 @@ strings.body || ' Lv ' || chain_category_level skill_name,
 --coalesce(str_eu.body, skills.desc) || case when chain_category_level is not null then ' Lv ' || chain_category_level else '' end skill_EU,
 effect1_type, 
 effect1_reserved4 + coalesce(effect1_reserved3, 0) damage,
-effect1_reserved3 upgrade_damage_bonus,
+effect1_reserved3 upgrade_dmg_bonus,
+
+
+--effect1_acc_mod1, 
+effect1_acc_mod2 acc_mod, 
+--effect1_critical_prob_mod1,
+effect1_critical_prob_mod2 critical_prob_mod,
+case when pvp_damage_ratio is null then '100%' else pvp_damage_ratio||'%' end pvp_damage_ratio,
+
 coalesce(counter_skill,'')||coalesce(target_valid_status1,'')||coalesce(target_valid_status2,'')||coalesce(target_valid_status3,'')||coalesce(target_valid_status4,'') usage_condition,
+
+case when coalesce(effect1_reserved16, effect1_reserved22) = '0' then null
+     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_A' then 'Warrior-type'
+     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_B' then 'Assassin-type'
+     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_C' then 'Mage-type'
+     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_D' then 'Special-type'
+     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_A, _dmg_race_type_B, _dmg_race_type_C, _dmg_race_type_D' then 'Warrior/Assassin/Mage/Special-types'
+     else coalesce(effect1_reserved16, effect1_reserved22)
+end bonus_dmg_condition,
+
 case when effect1_reserved16 = 0 then null
      when effect1_reserved16 is not null then effect1_reserved10 + coalesce(effect1_reserved9, 0) 
      when effect1_reserved22 is not null then effect1_reserved21 + coalesce(effect1_reserved20, 0) 
@@ -20,26 +38,15 @@ case when effect1_reserved16 = 0 then null
 end upgrade_conditional_damage_bonus,
 --effect1_reserved9 upgrade_conditional_damage_bonus, 
 
-case when coalesce(effect1_reserved16, effect1_reserved22) = '0' then null
-     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_A' then 'Warrior-type'
-     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_B' then 'Assassin-type'
-     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_C' then 'Mage-type'
-     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_D' then 'Special-type'
-     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_A, _dmg_race_type_B, _dmg_race_type_C, _dmg_race_type_D' then 'Warrior/Assassin/Mage/Special-types'
-     else coalesce(effect1_reserved16, effect1_reserved22)
-end bonus_damage_condition,
 
---effect1_acc_mod1, 
-effect1_acc_mod2, 
---effect1_critical_prob_mod1,
-effect1_critical_prob_mod2,
-case when pvp_damage_ratio is null then '100%' else pvp_damage_ratio||'%' end pvp_modifier,
 
 case when effect1_reserved8 = 1 then '0.5x (33%), 1x (33%), 1.5x (33%)'
     when effect1_reserved8 = 3 then '0.9x (25%), 1x (25%), 1.1x (50%)'
     when effect1_reserved8 = 6 then '1x (66%), 2x (33%)'
 end random_damage_multiplier
---,*
+,effect1_reserved5
+,effect1_reserved6
+,*
 FROM skill_base_clients skills
 left outer join
 _ENGLISH_STRINGS_NA_EU_XREF strings
@@ -91,22 +98,48 @@ and effect1_type in (
 'BA'
 )
 )*/
---and (upper(substr(skills.name, 1, 3)) in ('CL_', 'CH_') or learn_class in ('CLERIC', 'CHANTER'))
---and (upper(substr(skills.name, 1, 3)) in ('CL_', 'PR_') or learn_class in ('CLERIC', 'PRIEST'))
---and (upper(substr(skills.name, 1, 3)) in ('FI_') or learn_class in ('WARRIOR', 'FIGHTER')) and coalesce(learn_class, '') <> 'KNIGHT'
+--and (upper(substr(skills.name, 1, 3)) in ('CL_', 'CH_') or learn_class in ('CLERIC', 'CHANTER')) and coalesce(learn_class, '') <> 'PRIEST'
+--and (upper(substr(skills.name, 1, 3)) in ('CL_', 'PR_') or learn_class in ('CLERIC', 'PRIEST')) and coalesce(learn_class, '') <> 'CHANTER'
+and (upper(substr(skills.name, 1, 3)) in ('FI_') or learn_class in ('WARRIOR', 'FIGHTER')) and coalesce(learn_class, '') <> 'KNIGHT'
 --and (upper(substr(skills.name, 1, 3)) in ('WA_', 'KN_') or learn_class in ('WARRIOR', 'KNIGHT')) and coalesce(learn_class, '') <> 'FIGHTER'
-and (upper(substr(skills.name, 1, 3)) in ('SC_','RA_') or learn_class in ('SCOUT', 'RANGER')) and coalesce(learn_class, '') <> 'ASSASSIN'
+--and (upper(substr(skills.name, 1, 3)) in ('SC_','RA_') or learn_class in ('SCOUT', 'RANGER')) and coalesce(learn_class, '') <> 'ASSASSIN'
 --and (upper(substr(skills.name, 1, 3)) in ('SC_','AS_') or learn_class in ('SCOUT', 'ASSASSIN')) and coalesce(learn_class, '') <> 'RANGER'
 
 --and skill_group_name is not null
 --order by skills.desc, cast(chain_category_level as number)
 order by strings.body, cast(chain_category_level as number), learn_class desc
-
+;
 --select * from client_skills
 
 
 
 
-
+select distinct 
+effect1_type,
+effect1_reserved16,
+effect1_reserved22
+from skill_base_clients
+where 
+--effect1_type like 'SkillATK%_Instant' --body = 'Break Power'
+effect1_reserved4 is not null 
+and effect1_type in (
+'SkillATK_Instant',
+'DashATK',
+'SkillATKDrain_Instant',
+--'OneTimeBoostSkillAttack',
+'BackDashATK',
+'MagicCounterATK',
+'MoveBehindATK',
+--'SignetBurst',
+'CarveSignet',
+'DispelallCounterATK',
+'FPATK_Instant',
+'FPATK',
+'DispelBuffCounterATK',
+'DelayedFPATK_Instant',
+'MPAttack',
+'Mpattack_Instant',
+'buffstun'
+)
 
 --select distinct effect1_type from client_skills

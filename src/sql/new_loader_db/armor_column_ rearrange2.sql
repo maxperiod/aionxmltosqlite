@@ -1,3 +1,39 @@
+drop table if exists _gear_stats;
+create table _gear_stats as
+/*
+with strings_lower as (
+select lower(name) lower_name, body from strings
+where folder like '/ENU%'
+)
+*/
+
+SELECT folder, file, id, 1 bonus_num, null cond_aug_lvl, substr(bonus_attr1, 1, instr(bonus_attr1, ' ') - 1) bonus_attr_type, substr(bonus_attr1, instr(bonus_attr1, ' ') + 1) bonus_attr_value from client_items where bonus_attr1 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 2 bonus_num, null cond_aug_lvl, substr(bonus_attr2, 1, instr(bonus_attr2, ' ') - 1) bonus_attr_type, substr(bonus_attr2, instr(bonus_attr2, ' ') + 1) bonus_attr_value from client_items where bonus_attr2 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 3 bonus_num, null cond_aug_lvl, substr(bonus_attr3, 1, instr(bonus_attr3, ' ') - 1) bonus_attr_type, substr(bonus_attr3, instr(bonus_attr3, ' ') + 1) bonus_attr_value from client_items where bonus_attr3 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 4 bonus_num, null cond_aug_lvl, substr(bonus_attr4, 1, instr(bonus_attr4, ' ') - 1) bonus_attr_type, substr(bonus_attr4, instr(bonus_attr4, ' ') + 1) bonus_attr_value from client_items where bonus_attr4 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 5 bonus_num, null cond_aug_lvl, substr(bonus_attr5, 1, instr(bonus_attr5, ' ') - 1) bonus_attr_type, substr(bonus_attr5, instr(bonus_attr5, ' ') + 1) bonus_attr_value from client_items where bonus_attr5 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 6 bonus_num, null cond_aug_lvl, substr(bonus_attr6, 1, instr(bonus_attr6, ' ') - 1) bonus_attr_type, substr(bonus_attr6, instr(bonus_attr6, ' ') + 1) bonus_attr_value from client_items where bonus_attr6 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 7 bonus_num, null cond_aug_lvl, substr(bonus_attr7, 1, instr(bonus_attr7, ' ') - 1) bonus_attr_type, substr(bonus_attr7, instr(bonus_attr7, ' ') + 1) bonus_attr_value from client_items where bonus_attr7 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 8 bonus_num, null cond_aug_lvl, substr(bonus_attr8, 1, instr(bonus_attr8, ' ') - 1) bonus_attr_type, substr(bonus_attr8, instr(bonus_attr8, ' ') + 1) bonus_attr_value from client_items where bonus_attr8 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 9 bonus_num, null cond_aug_lvl, substr(bonus_attr9, 1, instr(bonus_attr9, ' ') - 1) bonus_attr_type, substr(bonus_attr9, instr(bonus_attr9, ' ') + 1) bonus_attr_value from client_items where bonus_attr9 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 10 bonus_num, null cond_aug_lvl, substr(bonus_attr10, 1, instr(bonus_attr10, ' ') - 1) bonus_attr_type, substr(bonus_attr10, instr(bonus_attr10, ' ') + 1) bonus_attr_value from client_items where bonus_attr10 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 11 bonus_num, null cond_aug_lvl, substr(bonus_attr11, 1, instr(bonus_attr11, ' ') - 1) bonus_attr_type, substr(bonus_attr11, instr(bonus_attr11, ' ') + 1) bonus_attr_value from client_items where bonus_attr11 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 12 bonus_num, null cond_aug_lvl, substr(bonus_attr12, 1, instr(bonus_attr12, ' ') - 1) bonus_attr_type, substr(bonus_attr12, instr(bonus_attr12, ' ') + 1) bonus_attr_value from client_items where bonus_attr12 is not null and file <> 'client_items_etc.xml' union all
+
+SELECT folder, file, id, 1 bonus_num, 1 cond_aug_lvl, substr(bonus_attr_a1, 1, instr(bonus_attr_a1, ' ') - 1) bonus_attr_type, substr(bonus_attr_a1, instr(bonus_attr_a1, ' ') + 1) bonus_attr_value from client_items where bonus_attr_a1 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 2 bonus_num, 1 cond_aug_lvl, substr(bonus_attr_a2, 1, instr(bonus_attr_a2, ' ') - 1) bonus_attr_type, substr(bonus_attr_a2, instr(bonus_attr_a2, ' ') + 1) bonus_attr_value from client_items where bonus_attr_a2 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 3 bonus_num, 1 cond_aug_lvl, substr(bonus_attr_a3, 1, instr(bonus_attr_a3, ' ') - 1) bonus_attr_type, substr(bonus_attr_a3, instr(bonus_attr_a3, ' ') + 1) bonus_attr_value from client_items where bonus_attr_a3 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 4 bonus_num, 1 cond_aug_lvl, substr(bonus_attr_a4, 1, instr(bonus_attr_a4, ' ') - 1) bonus_attr_type, substr(bonus_attr_a4, instr(bonus_attr_a4, ' ') + 1) bonus_attr_value from client_items where bonus_attr_a4 is not null and file <> 'client_items_etc.xml' union all
+
+SELECT folder, file, id, 1 bonus_num, 2 cond_aug_lvl, substr(bonus_attr_b1, 1, instr(bonus_attr_b1, ' ') - 1) bonus_attr_type, substr(bonus_attr_b1, instr(bonus_attr_b1, ' ') + 1) bonus_attr_value from client_items where bonus_attr_b1 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 2 bonus_num, 2 cond_aug_lvl, substr(bonus_attr_b2, 1, instr(bonus_attr_b2, ' ') - 1) bonus_attr_type, substr(bonus_attr_b2, instr(bonus_attr_b2, ' ') + 1) bonus_attr_value from client_items where bonus_attr_b2 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 3 bonus_num, 2 cond_aug_lvl, substr(bonus_attr_b3, 1, instr(bonus_attr_b3, ' ') - 1) bonus_attr_type, substr(bonus_attr_b3, instr(bonus_attr_b3, ' ') + 1) bonus_attr_value from client_items where bonus_attr_b3 is not null and file <> 'client_items_etc.xml' union all
+SELECT folder, file, id, 4 bonus_num, 2 cond_aug_lvl, substr(bonus_attr_b4, 1, instr(bonus_attr_b4, ' ') - 1) bonus_attr_type, substr(bonus_attr_b4, instr(bonus_attr_b4, ' ') + 1) bonus_attr_value from client_items where bonus_attr_b4 is not null and file <> 'client_items_etc.xml' 
+
+;
+
+
+
 --select distinct file from client_items;
 drop table if exists _items_with_separated_bonus_stats;
 create table _items_with_separated_bonus_stats as
@@ -224,7 +260,8 @@ authorize_type,
 max_authorize,
 authorize_name,
 can_change_permanent,
-highreform_groupset,
+highreform_input_groupset,
+highreform_output_groupset,
 limit_attribute_desc,
 blade_fx,
 item_fx,
@@ -800,7 +837,7 @@ reduce_max dmg_reduction_max,
 damage_reduce dmg_reduction_pct,
 max_enchant_value,
 block + coalesce(total_block.value, 0) block, 
-cast(total_pvpdefendratio.value as real) / 100 pvp_defense_pct, 
+cast(total_pvpdefendratio.value as real) / 10 pvp_defense_pct, 
 total_magicalresist.value magic_resist,
 
 option_slot_value - option_slot_bonus manastone_slots,

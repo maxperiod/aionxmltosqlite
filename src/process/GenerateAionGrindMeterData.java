@@ -1,32 +1,19 @@
-package experimental;
+package process;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
-
 import JDBC.DBConnection;
 import mains.SqliteToFile;
-
 import sqliteJDBC.SqliteConnection;
 
-public class experiment {
+public class GenerateAionGrindMeterData {
 		
 	public static void main(String[] args) throws SAXException, IOException, ClassNotFoundException, SQLException{
 		
-		DBConnection connection = new SqliteConnection("src/tests/experiment2.db");
+		DBConnection connection = new SqliteConnection("C:/stuff/aionsqlite.db");
 		connection.connect();
 	
 		ResultSet rs;

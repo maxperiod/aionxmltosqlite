@@ -1,35 +1,22 @@
 --drop TABLE IF EXISTS _CONDITION_AUGMENT_ARMOR;
 --CREATE TABLE _CONDITION_AUGMENT_ARMOR AS
 
-WITH client_strings_NA AS (
-SELECT upper(name) name, body FROM strings
-where folder like '/ENU%'
-),
-client_strings_EU AS (
-SELECT upper(name) name, body FROM strings
-where folder like '/ENG%'
-)
 
 SELECT DISTINCT
 --id,
 --class,
 skill_group_name, 
 --skills.name, 
-case 
-    when coalesce(na.body, skills.desc) = coalesce(eu.body, skills.desc) then coalesce(na.body, skills.desc)
-    else coalesce(na.body, skills.desc) || ' / ' || coalesce(eu.body, skills.desc)
-end english_name, 
+str.body english_name, 
 cost_charge_armor,
 cost_charge_weapon,
 polish_charge_weapon
 
 FROM
 skill_base_clients skills--client_items_armor
-LEFT OUTER JOIN client_strings_NA na
-ON upper(skills.desc) = na.name
+LEFT OUTER JOIN _ENGLISH_STRINGS_NA_EU_XREF str
+ON upper(skills.desc) = str.upper_name
 
-LEFT OUTER JOIN client_strings_EU eu
-ON upper(skills.desc) = eu.name
 /*
 left outer join 
 client_skill_learns learn

@@ -16,6 +16,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 import JDBC.DBConnection;
 import sqliteJDBC.SqliteConnection;
+import sqliteJDBC.SqliteReservedWordsList;
 
 public class AionLoadXMLFoldersToSqlite {
 	private String dbFile;
@@ -25,7 +26,7 @@ public class AionLoadXMLFoldersToSqlite {
 	
 	private String loggerFile;
 	
-	
+	private Set<String> DBMSReservedWords = SqliteReservedWordsList.sqliteReservedWords;
 	
 	public AionLoadXMLFoldersToSqlite(String sqliteDatabaseFile){
 		dbFile = sqliteDatabaseFile;
@@ -57,11 +58,7 @@ public class AionLoadXMLFoldersToSqlite {
 			//logger.setUseParentHandlers(false);
 			logger.addHandler(fileHandler);
 		}
-		//List <String> xmlFilesInFolder = new ArrayList<String>();
-		//List <String> xmlFilesInFolderL10N = new ArrayList<String>();
-		
-		//XMLFinder xmlFinder = new XMLFinder("D:/Aion/extract_data");
-		//XMLFinder xmlFinder = new XMLFinder("D:/Aion/extract_L10N");
+
 		
 		Map<String, String> potentialTables = new HashMap<String, String>();
 		
@@ -69,7 +66,7 @@ public class AionLoadXMLFoldersToSqlite {
 	
 		Map<String, String> additionalColumns = new LinkedHashMap<String, String>();
 		additionalColumns.put("folder", "TEXT");
-		additionalColumns.put("file", "TEXT");
+		additionalColumns.put("file", "TEXT");	
 		
 		//AionXmlFindPotentialTables handler = new AionXmlFindPotentialTables(tree);
 		AionXmlFindPotentialTables handler = new AionXmlFindPotentialTables(potentialTables);
@@ -173,8 +170,16 @@ public class AionLoadXMLFoldersToSqlite {
 			System.out.printf("Creating table %s\n", table);
 			try {
 				connection.executeUpdate("DROP TABLE IF EXISTS " + table + ';');
-				connection.executeUpdate(DDL.toString());
+				//connection.executeUpdate(DDL.toString());
+				connection.executeUpdate(TableStructureDDLGenerator.generateDDL(DDL, DBMSReservedWords));
 			} catch (SQLException e) {
+				if (logger != null){
+					logger.warning(String.format("DDL execution failed: %s\n%s", DDL, e.getMessage()));
+				}
+				else {
+					System.err.printf("DDL execution failed: %s\n%s", DDL, e.getMessage());
+					//e.printStackTrace();
+				}
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -185,16 +190,18 @@ public class AionLoadXMLFoldersToSqlite {
 		handler3.setLogger(logger);
 		System.out.println("Inserting into database");
 		
+		handler3.setDBMSReservedWords(DBMSReservedWords);
+		
 		for (String folder: keyset){
 			XMLFinder xmlFinder = folders.get(folder);
 			
 			for (String file: xmlFinder.getXmlFilesInFolder()){
-				System.out.printf("Inserting records into %s\n", file);
+				System.out.printf("Inserting records from %s\n", file);
 				Map<String, String> additionalColumnValues = new LinkedHashMap<String, String>();
 				
 				int lastSlash = file.lastIndexOf('/', file.length());
 				
-				additionalColumnValues.put("folder", file.substring(0, lastSlash - 1));
+				additionalColumnValues.put("folder", file.substring(0, lastSlash/* - 1*/));
 				additionalColumnValues.put("file", file.substring(lastSlash + 1, file.length()));			
 				handler3.setAdditionalColumnValues(additionalColumnValues);
 				xr.parse(xmlFinder.getDirectory() + '\\' + file);
@@ -219,7 +226,8 @@ public class AionLoadXMLFoldersToSqlite {
 		
 		
 		connection.executeUpdate("COMMIT;");
-		
+				
+		connection.executeUpdate("create index index_strings on strings (folder, name);");
 		
 		connection.disconnect();
 		
