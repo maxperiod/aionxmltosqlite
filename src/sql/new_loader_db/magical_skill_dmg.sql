@@ -10,7 +10,7 @@ learn.class class_learn,
 coalesce(str.body, skills.desc) || case when chain_category_level is not null then ' Lv ' || chain_category_level else '' end skill,   
 effect1_type, 
 coalesce(effect1_reserved1, 0) + effect1_reserved2 damage,
-effect1_reserved1 dmg_per_upgrade_lvl,
+--effect1_reserved1 dmg_per_upgrade_lvl,
 --effect1_reserved2,
 
 effect1_reserved10 element,
@@ -49,9 +49,7 @@ case when effect1_noresist = 1 then 'N' else 'Y' end resistable
 --,*
 
 --FROM skill_base_clients skills
-FROM _SKILLS_WITH_NAME_NORMALIZED_BASE skills
-join _SKILLS_WITH_NAME_NORMALIZED_EFFECTS effects
-on skills.id = effects.id
+FROM _SKILLS_WITH_NAME_NORMALIZED skills
 
 left outer join
 _ENGLISH_STRINGS_NA_EU_XREF str

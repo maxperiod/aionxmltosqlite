@@ -1,16 +1,13 @@
 
 
-with strings_lowercase as (
-select lower(name) name, body
-from strings
-where strings.folder like ?
-)
-SELECT client_items.id, COALESCE(strings_lowercase.body, client_items.name) FROM
+
+SELECT client_items.id, COALESCE(strings.body, client_items.name) FROM
 client_items
-LEFT OUTER JOIN strings_lowercase
-ON lower(client_items.desc) = strings_lowercase.name
+LEFT OUTER JOIN _strings_upper_name strings
+ON upper(client_items.desc) = strings.upper_name
 WHERE client_items.desc NOT LIKE '%NPC%'
 AND client_items.desc NOT LIKE '%TEST%'
+AND strings.folder like ?
 
 --select distinct folder from strings
 --/DEU/data/String

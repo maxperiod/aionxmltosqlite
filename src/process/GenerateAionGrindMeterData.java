@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.xml.sax.SAXException;
 import JDBC.DBConnection;
+import experimental.AionLoadXMLFoldersToSqlite;
 import mains.SqliteToFile;
 import sqliteJDBC.SqliteConnection;
 
@@ -13,19 +14,20 @@ public class GenerateAionGrindMeterData {
 		
 	public static void main(String[] args) throws SAXException, IOException, ClassNotFoundException, SQLException{
 		
-		DBConnection connection = new SqliteConnection("C:/stuff/aionsqlite.db");
+		//DBConnection connection = new SqliteConnection("C:/stuff/aionsqlite2.db");
+		DBConnection connection = new SqliteConnection("C:/stuff/aionEU62PTS.db");
 		connection.connect();
 	
 		ResultSet rs;
 		
 		String[] languages = {
 				"ENU",
-				"ENG",
+				"ENG"/*,
 				"FRA",
 				"DEU",
 				"ITA",
 				"PLK",
-				"ESN"
+				"ESN"*/
 		};
 		
 		System.out.println("msgenums");

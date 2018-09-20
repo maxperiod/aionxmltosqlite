@@ -299,13 +299,32 @@ select id, skill, gen_desc, effect_num from desc_alwaysparry;
 --============================================================================================================================================--
 
 select 
+id,
+skill,
+null gen_desc,
 effect1_basiclv,
+effect1_reserved1,
+effect1_reserved2,
 effect1_reserved3,
 effect1_reserved4,
-effect1_reserved5,
+effect1_reserved5 armor_type,
+effect1_reserved6,
 effect1_reserved7,
 effect1_reserved8,
 effect1_reserved9,
+effect1_reserved10,
+effect1_reserved11,
+effect1_reserved12,
+effect1_reserved13,
+effect1_reserved14,
+effect1_reserved15,
+effect1_reserved16,
+effect1_reserved17,
+effect1_reserved18,
+effect1_reserved19,
+effect1_reserved20,
+effect1_reserved21,
+effect1_reserved22,
 *
 from _SKILLS_WITH_NAME_NORMALIZED 
 where lower(effect1_type) = 'amr_mastery'
@@ -330,12 +349,28 @@ skills.skill,
 ||'. '              
  gen_desc,
 skills.effect1_basiclv,
-skills.effect1_reserved1,
-skills.effect1_reserved3,
-skills.effect1_reserved4,
-skills.effect1_reserved5,
-skills.effect1_reserved6,
+skills.effect1_reserved1 effect_skill,
+skills.effect1_reserved2,
+skills.effect1_reserved3 x_range,
+skills.effect1_reserved4 y_range,
+skills.effect1_reserved5 affected_targets,
+skills.effect1_reserved6 friend_or_foe,
 skills.effect1_reserved7,
+skills.effect1_reserved8,
+skills.effect1_reserved9,
+skills.effect1_reserved10,
+skills.effect1_reserved11,
+skills.effect1_reserved12,
+skills.effect1_reserved13,
+skills.effect1_reserved14,
+skills.effect1_reserved15,
+skills.effect1_reserved16,
+skills.effect1_reserved17,
+skills.effect1_reserved18,
+skills.effect1_reserved19,
+skills.effect1_reserved20,
+skills.effect1_reserved21,
+skills.effect1_reserved22,
 *
 from _SKILLS_WITH_NAME_NORMALIZED skills
 
@@ -364,6 +399,28 @@ effect1_acc_mod1,
 effect1_acc_mod2,
 effect1_remain1,
 effect1_remain2,
+effect1_reserved1,
+effect1_reserved2,
+effect1_reserved3,
+effect1_reserved4,
+effect1_reserved5,
+effect1_reserved6,
+effect1_reserved7,
+effect1_reserved8,
+effect1_reserved9,
+effect1_reserved10,
+effect1_reserved11,
+effect1_reserved12,
+effect1_reserved13,
+effect1_reserved14,
+effect1_reserved15,
+effect1_reserved16,
+effect1_reserved17,
+effect1_reserved18,
+effect1_reserved19,
+effect1_reserved20,
+effect1_reserved21,
+effect1_reserved22,
 *
 from _SKILLS_WITH_NAME_NORMALIZED 
 where lower(effect1_type) = 'bind'
@@ -626,8 +683,10 @@ with desc_magical_attack as (
 SELECT
 --body, skill_tag, type, sub_type, skill_category, ultra_skill, ultra_transfer, chain_category_level, skill_group_name, skillicon_name, delay_id, activation_attribute, cost_dp, cost_charge_weapon, cost_charge_armor, polish_charge_weapon, dispel_category, required_dispel_level, target_slot, target_stop, hostile_type, delay_type, delay_time, first_target, first_target_valid_distance, target_range, target_species_restriction, target_relation_restriction, cancel_rate, obstacle, add_wpn_range, move_casting, auto_attack, motion_name, target_marker_radius, show_weapon, fire_fx, fire_fx_bone, effect1_type, effect1_noresist, effect1_remain1, effect1_remain2, effect1_effectid, effect1_basiclv, effect1_target_type, effect1_reserved7, effect1_reserved8, effect1_reserved9, effect1_reserved16, effect1_hop_type, effect1_hop_b, effect2_type, effect2_noresist, effect2_checkforchain, effect2_remain1, effect2_remain2, effect2_effectid, effect2_basiclv, effect2_target_type, effect2_cond_preeffect, effect2_cond_preeffect_prob1, effect2_cond_preeffect_prob2, effect2_reserved1, effect2_reserved2, effect2_reserved6, effect2_reserved13, effect2_reserved16, effect3_type, effect3_noresist, effect3_checkforchain, effect3_remain1, effect3_remain2, effect3_effectid, effect3_basiclv, effect3_target_type, effect3_cond_preeffect, effect3_cond_preeffect_prob1, effect3_cond_preeffect_prob2, effect3_reserved1, effect3_reserved2, effect3_reserved6, effect3_reserved13, effect3_reserved16, effect4_type, effect4_noresist, effect4_checkforchain, effect4_remain1, effect4_remain2, effect4_effectid, effect4_basiclv, effect4_target_type, effect4_cond_preeffect, effect4_cond_preeffect_prob1, effect4_cond_preeffect_prob2, effect4_reserved1, effect4_reserved2, effect4_reserved6, effect4_reserved13, effect4_reserved16, effect1_hop_a, pvp_remain_time_ratio, cost_parameter, cost_end, revision_distance, casting_delay, peace_skill, cast_fx, cast_fx_bone, cast_voice, hit_fx, hit_fx_bone, hit_fx_attacker_oriented, status_fx, status_fx_bone, status_fx_slot, effect1_reserved10, effect1_reserved11, effect1_acc_mod2, effect1_critical_prob_mod2, effect3_reserved7, effect3_reserved8, effect3_reserved9, effect3_reserved10, effect3_reserved11, effect3_critical_prob_mod2, effect3_hop_type, effect3_hop_b, chain_category_name, chain_skill_prob2, effect1_randomtime, effect1_reserved1, effect1_reserved2, effect1_reserved12, effect2_randomtime, effect2_reserved7, effect2_reserved8, effect2_reserved9, effect2_reserved10, effect2_reserved11, effect2_critical_prob_mod2, effect2_hop_type, effect2_hop_b, effect3_randomtime, cost_end_lv, instant_skill, motion_play_speed, effect1_reserved3, effect1_reserved4, effect1_reserved5, effect3_hop_a, effect4_hop_a, effect4_hop_b, effect1_reserved6, interval_hit_fx, interval_hit_fx_bone, effect1_reserved13, effect4_hop_type, spend_time_on_logout, target_maxcount, target_range_area_type, target_range_opt1, target_range_opt3, effect1_reserved14, effect1_reserved15, effect1_reserved17, effect1_reserved18, effect2_reserved3, effect2_reserved4, effect2_reserved14, effect3_reserved3, effect3_reserved5, no_remove_at_die, self_flying_restriction, component, component_count, component_expendable, effect2_checktime, effect1_checktime, no_save_on_logout, effect1_reserved_cond1, effect1_reserved_cond1_prob1, effect1_reserved_cond1_prob2, required_sword, required_mace, required_dagger, required_orb, required_book, required_2hsword, required_polearm, required_staff, required_bow, ammo_bone, ammo_fx, ammo_speed, target_valid_status1, target_valid_status2, target_valid_status3, target_valid_status4, target_valid_status5, nouse_combat_state, effect3_hidemsg, target_slot_level, system_fire_fx, system_fire_fx_bone, allow_use_form_category, no_jump_cancel, trail_tex, hit_camera_shake, effect1_critical_add_dmg_mod2, splash, hit_fx_ex1, effect2_acc_mod2, effect2_hop_a, target_flying_restriction, pvp_damage_ratio, effect3_reserved4, penalty_type_succ, effect2_reserved_cond1, effect2_reserved_cond1_prob1, effect2_reserved_cond1_prob2, effect2_reserved15, effect2_reserved17, effect2_reserved18, effect3_reserved14, effect3_reserved15, effect3_reserved17, effect3_reserved18, effect4_reserved3, effect4_reserved4, effect4_reserved7, effect4_reserved14, effect4_reserved15, effect4_reserved17, effect4_reserved18, effect4_hidemsg, effect4_reserved10, effect4_reserved11, effect4_reserved12, effect4_critical_prob_mod2, ammo_fx_type, effect2_reserved5, prechain_category_name, chain_time, effect1_hidemsg, self_chain_count, delay_time_lv, motion_mode, pre_fx, pre_fx_delay, pre_fx_bone, counter_skill, prechain_count, effect2_reserved12, hp_fx, penalty_skill_succ, effect3_acc_mod2, charge_set_name, use_arrow_count, use_arrow, effect1_acc_mod1, target_range_opt2, target_range_opt4, effect3_reserved_cond1, effect3_reserved_cond1_prob1, effect3_reserved_cond1_prob2, chain_skill_prob1, effect2_hidemsg, hit_fx_ex2, effect1_critical_prob_mod1, cost_time, effect1_reserved19, effect1_reserved20, effect1_reserved21, effect1_reserved22, required_leftweapon, required_gun, required_cannon, cost_toggle, penalty_skill_succ_msg, required_ride_robot, effect2_cond_race, effect2_cond_race_prob1, effect2_cond_race_prob2, toggle_timer, boost_type, effect1_reserved_cond2_prob2, required_keyblade, effect4_reserved19, effect4_reserved20, effect4_reserved21, effect4_reserved22, max_maintain_count, effect2_reserved19, change_stance, effect2_reserved20, effect2_reserved21, effect2_reserved22, effect3_reserved12, effect2_cond_status, effect2_cond_status_prob1, effect2_cond_status_prob2, effect2_cond_attack_dir, effect2_cond_attack_dir_prob1, effect2_cond_attack_dir_prob2, hit_fx_ex3, hit_fx_ex4, hit_fx_ex5, effect3_checktime, self_hide_restriction, effect2_acc_mod1, effect4_reserved8, effect4_reserved_cond1, effect4_reserved_cond1_prob1, effect4_reserved_cond1_prob2, cost_checktime_parameter, cost_checktime, cost_start_lv, cost_start, required_harp, aura_fx, aura_fx_bone, aura_fx_slot, status_sfx1, effect3_reserved_cond2, effect3_reserved_cond2_prob1, effect3_reserved_cond2_prob2, effect1_reserved_cond2, remaining_fx, sfx3, status_shader, conflict_id, effect4_checktime, effect4_reserved9, effect1_reserved_cond2_prob1, effect3_critical_prob_mod1, charging_delay, effect1_cond_preeffect_prob1, effect1_cond_preeffect_prob2, effect3_cond_race_prob1, effect3_cond_race_prob2, nonchained_delay_time, prechain_skillname, broadcast_use_message, effect4_reserved5, castcancel_fx, castcancel_fx_bone, cast_fxc, fire_fxc, hit_fxc, stc_desc, ammo_fxc, cast_camera_work, hit_camera_work, hit_target_camera_shake, effect3_cond_attack_dir, effect3_cond_attack_dir_prob1, effect3_cond_attack_dir_prob2, effect3_cond_status, effect3_cond_status_prob1, effect3_cond_status_prob2, effect4_cond_status, effect4_cond_status_prob1, effect4_cond_status_prob2, need_fx, penalty_no_casting_time_succ, effect2_critical_prob_mod1, max_skill_point 
 
-id,
-skill,
+skills.id,
+skills.name,
+skills.skill,
+skills.class,
  case when lower(effect1_type) = 'carvesignet' then 'Carve signet: +'||effect1_reserved10||' levels (maximum '||effect1_reserved14||'). ' else '' end
 ||'Deals '
 || (coalesce(effect1_reserved2, 0) + coalesce(effect1_reserved1, 0)) 
@@ -692,44 +751,66 @@ skill,
 gen_desc,
 effect_num,
 
-coalesce(effect1_reserved1, 0) + effect1_reserved2 damage,
-effect1_reserved1 dmg_per_upgrade_lvl,
---effect1_reserved2,
-
-effect1_reserved10 element,
---effect1_acc_mod1,
-effect1_acc_mod2 acc_mod,
-effect1_critical_prob_mod2 critical_prob_mod,
-coalesce(pvp_damage_ratio, 100)||'%' pvp_damage_ratio,
---effect1_critical_add_dmg_mod2,
---effect1_critical_prob_mod1,
---effect1_critical_prob_mod2,
-coalesce(counter_skill,'')||coalesce(target_valid_status1,'')||coalesce(target_valid_status2,'')||coalesce(target_valid_status3,'')||coalesce(target_valid_status4,'') usage_condition,
-
-case when effect1_reserved16 = 0 then null
-     when effect1_reserved16 is not null then effect1_reserved9 + coalesce(effect1_reserved8, 0) 
-     when effect1_reserved22 is not null then effect1_reserved21 + coalesce(effect1_reserved20, 0) 
-end conditional_damage,
-case when effect1_reserved16 = 0 then null
-     when effect1_reserved16 is not null then effect1_reserved8 
-     when effect1_reserved22 is not null then effect1_reserved20
-end upgrade_conditional_damage_bonus,
-
---effect1_reserved9 upgrade_conditional_damage_bonus, 
-
-case when coalesce(effect1_reserved16, effect1_reserved22) = '0' then null
-     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_A' then 'Warrior-type'
-     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_B' then 'Assassin-type'
-     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_C' then 'Mage-type'
-     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_D' then 'Special-type'
-     when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_A, _dmg_race_type_B, _dmg_race_type_C, _dmg_race_type_D' then 'Warrior/Assassin/Mage/Special-types'
-     else coalesce(effect1_reserved16, effect1_reserved22)
-end bonus_damage_condition,
-
-
-case when effect1_noresist = 1 then 'N' else 'Y' end resistable
-
-,*
+effect1_acc_mod1,
+effect1_acc_mod2,
+effect1_basiclv,
+--effect1_checkforchain,
+--effect1_checktime,
+--effect1_cond_attack_dir,
+--effect1_cond_attack_dir_prob1,
+--effect1_cond_attack_dir_prob2,
+effect1_cond_preeffect,
+effect1_cond_preeffect_prob1,
+effect1_cond_preeffect_prob2,
+effect1_cond_race,
+--effect1_cond_race_prob1,
+effect1_cond_race_prob2,
+effect1_cond_status,
+effect1_cond_status_prob1,
+effect1_cond_status_prob2,
+effect1_critical_add_dmg_mod2,
+effect1_critical_prob_mod1,
+effect1_critical_prob_mod2,
+effect1_effectid,
+effect1_hidemsg,
+effect1_hop_a,
+effect1_hop_b,
+effect1_hop_type,
+effect1_noresist,
+--effect1_randomtime,
+--effect1_remain1,
+--effect1_remain2,
+effect1_reserved1,
+effect1_reserved2,
+effect1_reserved3,
+effect1_reserved4,
+effect1_reserved5,
+effect1_reserved6,
+effect1_reserved7,
+effect1_reserved8,
+effect1_reserved9,
+effect1_reserved10,
+effect1_reserved11,
+effect1_reserved12,
+effect1_reserved13,
+effect1_reserved14,
+effect1_reserved15,
+effect1_reserved16,
+effect1_reserved17,
+effect1_reserved18,
+effect1_reserved19,
+--effect1_reserved20,
+--effect1_reserved21,
+--effect1_reserved22,
+--effect1_reserved_cond1,
+--effect1_reserved_cond1_prob1,
+--effect1_reserved_cond1_prob2,
+--effect1_reserved_cond2,
+--effect1_reserved_cond2_prob1,
+--effect1_reserved_cond2_prob2,
+effect1_target_type,
+effect1_type
+--,*
 
 --FROM skill_base_clients skills
 FROM _SKILLS_WITH_NAME_NORMALIZED skills
@@ -855,13 +936,25 @@ effect1_critical_prob_mod2,
 effect1_reserved1,
 effect1_reserved2,
 effect1_reserved3,
+effect1_reserved4,
+effect1_reserved5,
 effect1_reserved6,
+effect1_reserved7,
+effect1_reserved8,
+effect1_reserved9,
 effect1_reserved10,
 effect1_reserved11,
+effect1_reserved12,
+effect1_reserved13,
+effect1_reserved14,
 effect1_reserved15,
 effect1_reserved16,
 effect1_reserved17,
 effect1_reserved18,
+effect1_reserved19,
+effect1_reserved20,
+effect1_reserved21,
+effect1_reserved22,
 *
 
 from _SKILLS_WITH_NAME_NORMALIZED 
@@ -964,6 +1057,8 @@ with desc_gen_shield as (
 
 select 
 id,
+name,
+class,
 skill,
 case when effect1_reserved6 = 1 
     then 'Reduces incoming '
@@ -990,17 +1085,66 @@ end
 --||'). ' 
 gen_desc,
 effect_num,
+--effect1_acc_mod1,
+--effect1_acc_mod2,
+effect1_basiclv,
+effect1_checkforchain,
+--effect1_checktime,
+--effect1_cond_attack_dir,
+--effect1_cond_attack_dir_prob1,
+--effect1_cond_attack_dir_prob2,
+effect1_cond_preeffect,
+effect1_cond_preeffect_prob1,
+effect1_cond_preeffect_prob2,
+effect1_cond_race,
+effect1_cond_race_prob1,
+effect1_cond_race_prob2,
+--effect1_cond_status,
+--effect1_cond_status_prob1,
+--effect1_cond_status_prob2,
+--effect1_critical_add_dmg_mod2,
+effect1_critical_prob_mod1,
+effect1_critical_prob_mod2,
+effect1_effectid,
+effect1_hidemsg,
+effect1_hop_a,
+effect1_hop_b,
+effect1_hop_type,
+effect1_noresist,
+--effect1_randomtime,
+effect1_remain1,
+effect1_remain2,
+effect1_reserved1,
 effect1_reserved2,
+--effect1_reserved3,
+--effect1_reserved4,
+--effect1_reserved5,
 effect1_reserved6,
 effect1_reserved7,
 effect1_reserved8,
-effect1_basiclv,
+--effect1_reserved9,
+effect1_reserved10,
+effect1_reserved11,
+--effect1_reserved12,
+--effect1_reserved13,
+--effect1_reserved14,
+--effect1_reserved15,
+--effect1_reserved16,
+effect1_reserved17,
+effect1_reserved18,
+--effect1_reserved19,
+--effect1_reserved20,
+--effect1_reserved21,
+--effect1_reserved22,
 effect1_reserved_cond1,
 effect1_reserved_cond1_prob1,
 effect1_reserved_cond1_prob2,
-effect1_remain1,
-effect1_remain2,
-*
+--effect1_reserved_cond2,
+--effect1_reserved_cond2_prob1,
+--effect1_reserved_cond2_prob2,
+effect1_target_type,
+effect1_type
+
 from _SKILLS_WITH_NAME_NORMALIZED 
 where lower(effect1_type) = 'shield'
 
@@ -1017,7 +1161,9 @@ with physical_attack_skills as (
 SELECT 
 --body, skill_tag, type, sub_type, skill_category, ultra_skill, ultra_transfer, chain_category_level, skill_group_name, skillicon_name, delay_id, activation_attribute, cost_dp, cost_charge_weapon, cost_charge_armor, polish_charge_weapon, dispel_category, required_dispel_level, target_slot, target_stop, hostile_type, delay_type, delay_time, first_target, first_target_valid_distance, target_range, target_species_restriction, target_relation_restriction, cancel_rate, obstacle, add_wpn_range, move_casting, auto_attack, motion_name, target_marker_radius, show_weapon, fire_fx, fire_fx_bone, effect1_type, effect1_noresist, effect1_remain1, effect1_remain2, effect1_effectid, effect1_basiclv, effect1_target_type, effect1_reserved7, effect1_reserved8, effect1_reserved9, effect1_reserved16, effect1_hop_type, effect1_hop_b, effect2_type, effect2_noresist, effect2_checkforchain, effect2_remain1, effect2_remain2, effect2_effectid, effect2_basiclv, effect2_target_type, effect2_cond_preeffect, effect2_cond_preeffect_prob1, effect2_cond_preeffect_prob2, effect2_reserved1, effect2_reserved2, effect2_reserved6, effect2_reserved13, effect2_reserved16, effect3_type, effect3_noresist, effect3_checkforchain, effect3_remain1, effect3_remain2, effect3_effectid, effect3_basiclv, effect3_target_type, effect3_cond_preeffect, effect3_cond_preeffect_prob1, effect3_cond_preeffect_prob2, effect3_reserved1, effect3_reserved2, effect3_reserved6, effect3_reserved13, effect3_reserved16, effect4_type, effect4_noresist, effect4_checkforchain, effect4_remain1, effect4_remain2, effect4_effectid, effect4_basiclv, effect4_target_type, effect4_cond_preeffect, effect4_cond_preeffect_prob1, effect4_cond_preeffect_prob2, effect4_reserved1, effect4_reserved2, effect4_reserved6, effect4_reserved13, effect4_reserved16, effect1_hop_a, pvp_remain_time_ratio, cost_parameter, cost_end, revision_distance, casting_delay, peace_skill, cast_fx, cast_fx_bone, cast_voice, hit_fx, hit_fx_bone, hit_fx_attacker_oriented, status_fx, status_fx_bone, status_fx_slot, effect1_reserved10, effect1_reserved11, effect1_acc_mod2, effect1_critical_prob_mod2, effect3_reserved7, effect3_reserved8, effect3_reserved9, effect3_reserved10, effect3_reserved11, effect3_critical_prob_mod2, effect3_hop_type, effect3_hop_b, chain_category_name, chain_skill_prob2, effect1_randomtime, effect1_reserved1, effect1_reserved2, effect1_reserved12, effect2_randomtime, effect2_reserved7, effect2_reserved8, effect2_reserved9, effect2_reserved10, effect2_reserved11, effect2_critical_prob_mod2, effect2_hop_type, effect2_hop_b, effect3_randomtime, cost_end_lv, instant_skill, motion_play_speed, effect1_reserved3, effect1_reserved4, effect1_reserved5, effect3_hop_a, effect4_hop_a, effect4_hop_b, effect1_reserved6, interval_hit_fx, interval_hit_fx_bone, effect1_reserved13, effect4_hop_type, spend_time_on_logout, target_maxcount, target_range_area_type, target_range_opt1, target_range_opt3, effect1_reserved14, effect1_reserved15, effect1_reserved17, effect1_reserved18, effect2_reserved3, effect2_reserved4, effect2_reserved14, effect3_reserved3, effect3_reserved5, no_remove_at_die, self_flying_restriction, component, component_count, component_expendable, effect2_checktime, effect1_checktime, no_save_on_logout, effect1_reserved_cond1, effect1_reserved_cond1_prob1, effect1_reserved_cond1_prob2, required_sword, required_mace, required_dagger, required_orb, required_book, required_2hsword, required_polearm, required_staff, required_bow, ammo_bone, ammo_fx, ammo_speed, target_valid_status1, target_valid_status2, target_valid_status3, target_valid_status4, target_valid_status5, nouse_combat_state, effect3_hidemsg, target_slot_level, system_fire_fx, system_fire_fx_bone, allow_use_form_category, no_jump_cancel, trail_tex, hit_camera_shake, effect1_critical_add_dmg_mod2, splash, hit_fx_ex1, effect2_acc_mod2, effect2_hop_a, target_flying_restriction, pvp_damage_ratio, effect3_reserved4, penalty_type_succ, effect2_reserved_cond1, effect2_reserved_cond1_prob1, effect2_reserved_cond1_prob2, effect2_reserved15, effect2_reserved17, effect2_reserved18, effect3_reserved14, effect3_reserved15, effect3_reserved17, effect3_reserved18, effect4_reserved3, effect4_reserved4, effect4_reserved7, effect4_reserved14, effect4_reserved15, effect4_reserved17, effect4_reserved18, effect4_hidemsg, effect4_reserved10, effect4_reserved11, effect4_reserved12, effect4_critical_prob_mod2, ammo_fx_type, effect2_reserved5, prechain_category_name, chain_time, effect1_hidemsg, self_chain_count, delay_time_lv, motion_mode, pre_fx, pre_fx_delay, pre_fx_bone, counter_skill, prechain_count, effect2_reserved12, hp_fx, penalty_skill_succ, effect3_acc_mod2, charge_set_name, use_arrow_count, use_arrow, effect1_acc_mod1, target_range_opt2, target_range_opt4, effect3_reserved_cond1, effect3_reserved_cond1_prob1, effect3_reserved_cond1_prob2, chain_skill_prob1, effect2_hidemsg, hit_fx_ex2, effect1_critical_prob_mod1, cost_time, effect1_reserved19, effect1_reserved20, effect1_reserved21, effect1_reserved22, required_leftweapon, required_gun, required_cannon, cost_toggle, penalty_skill_succ_msg, required_ride_robot, effect2_cond_race, effect2_cond_race_prob1, effect2_cond_race_prob2, toggle_timer, boost_type, effect1_reserved_cond2_prob2, required_keyblade, effect4_reserved19, effect4_reserved20, effect4_reserved21, effect4_reserved22, max_maintain_count, effect2_reserved19, change_stance, effect2_reserved20, effect2_reserved21, effect2_reserved22, effect3_reserved12, effect2_cond_status, effect2_cond_status_prob1, effect2_cond_status_prob2, effect2_cond_attack_dir, effect2_cond_attack_dir_prob1, effect2_cond_attack_dir_prob2, hit_fx_ex3, hit_fx_ex4, hit_fx_ex5, effect3_checktime, self_hide_restriction, effect2_acc_mod1, effect4_reserved8, effect4_reserved_cond1, effect4_reserved_cond1_prob1, effect4_reserved_cond1_prob2, cost_checktime_parameter, cost_checktime, cost_start_lv, cost_start, required_harp, aura_fx, aura_fx_bone, aura_fx_slot, status_sfx1, effect3_reserved_cond2, effect3_reserved_cond2_prob1, effect3_reserved_cond2_prob2, effect1_reserved_cond2, remaining_fx, sfx3, status_shader, conflict_id, effect4_checktime, effect4_reserved9, effect1_reserved_cond2_prob1, effect3_critical_prob_mod1, charging_delay, effect1_cond_preeffect_prob1, effect1_cond_preeffect_prob2, effect3_cond_race_prob1, effect3_cond_race_prob2, nonchained_delay_time, prechain_skillname, broadcast_use_message, effect4_reserved5, castcancel_fx, castcancel_fx_bone, cast_fxc, fire_fxc, hit_fxc, stc_desc, ammo_fxc, cast_camera_work, hit_camera_work, hit_target_camera_shake, effect3_cond_attack_dir, effect3_cond_attack_dir_prob1, effect3_cond_attack_dir_prob2, effect3_cond_status, effect3_cond_status_prob1, effect3_cond_status_prob2, effect4_cond_status, effect4_cond_status_prob1, effect4_cond_status_prob2, need_fx, penalty_no_casting_time_succ, effect2_critical_prob_mod1, max_skill_point 
 id,
-skill,
+skills.name,
+skills.skill,
+skills.class,
 /*case when counter_skill <> '' then 'Only usable after '||counter_skill||'. ' else '' end
 || case when target_valid_status1 is not null or target_valid_status2 is not null or target_valid_status3 is not null or target_valid_status4 is not null then
     'Only usable against targets in '
@@ -1097,7 +1243,7 @@ case when lower(effect1_type) = 'dashatk' then 'Flash step to target. ' else '' 
 gen_desc,
 effect_num,
 
-effect1_type, 
+/*
 effect1_reserved4 + coalesce(effect1_reserved3, 0) damage,
 effect1_reserved3 upgrade_dmg_bonus,
 
@@ -1138,7 +1284,67 @@ end random_damage_multiplier,
 
 effect1_reserved14,
 effect1_reserved11 non_evadeability
-,*
+*/
+--effect1_acc_mod1,
+effect1_acc_mod2,
+effect1_basiclv,
+--effect1_checkforchain,
+--effect1_checktime,
+--effect1_cond_attack_dir,
+--effect1_cond_attack_dir_prob1,
+--effect1_cond_attack_dir_prob2,
+effect1_cond_preeffect,
+effect1_cond_preeffect_prob1,
+effect1_cond_preeffect_prob2,
+--effect1_cond_race,
+--effect1_cond_race_prob1,
+--effect1_cond_race_prob2,
+effect1_cond_status,
+effect1_cond_status_prob1,
+effect1_cond_status_prob2,
+effect1_critical_add_dmg_mod2,
+effect1_critical_prob_mod1,
+effect1_critical_prob_mod2,
+effect1_effectid,
+effect1_hidemsg,
+effect1_hop_a,
+effect1_hop_b,
+effect1_hop_type,
+effect1_noresist,
+--effect1_randomtime,
+--effect1_remain1,
+--effect1_remain2,
+effect1_reserved1,
+effect1_reserved2,
+effect1_reserved3,--
+effect1_reserved4,--
+effect1_reserved5,
+effect1_reserved6,
+effect1_reserved7,
+effect1_reserved8,
+effect1_reserved9,--
+effect1_reserved10,--
+effect1_reserved11,
+effect1_reserved12,
+effect1_reserved13,
+effect1_reserved14,
+effect1_reserved15,
+effect1_reserved16,
+effect1_reserved17,
+effect1_reserved18,
+effect1_reserved19,
+effect1_reserved20,
+effect1_reserved21,
+effect1_reserved22,
+--effect1_reserved_cond1,
+--effect1_reserved_cond1_prob1,
+--effect1_reserved_cond1_prob2,
+--effect1_reserved_cond2,
+--effect1_reserved_cond2_prob1,
+--effect1_reserved_cond2_prob2,
+effect1_target_type,
+effect1_type
+
 from _SKILLS_WITH_NAME_NORMALIZED skills
 left join _CONDITIONAL_ATTACK ca1
 on lower(skills.effect1_reserved16) = ca1.name
@@ -1153,7 +1359,7 @@ where lower(effect1_type) in (
 'skillatkdrain_instant',
 --'OneTimeBoostSkillAttack',
 'backdashatk',
-'magiccounteratk',
+--'magiccounteratk',
 'movebehindatk',
 --'SignetBurst',
 'carvesignet'
@@ -1399,6 +1605,28 @@ select id, skill, gen_desc, effect_num from desc_gen_stun;
 --============================================================================================================================================--
 --============================================================================================================================================--
 
+SELECT DISTINCT
+id,
+--skill,
+effect_num,
+2 effect_sub_num,
+effect1_type,
+effect1_reserved14 effect,
+
+effect1_acc_mod1,
+effect1_acc_mod2,
+effect1_noresist,
+effect1_remain2 duration,
+effect1_remain1 duration_per_enchant,
+*
+from _SKILLS_WITH_NAME_NORMALIZED_EFFECTS skills
+
+where lower(effect1_type) = 'statdown'
+and effect1_reserved14 is not null
+
+
+--============================================================================================================================================--
+--============================================================================================================================================--
 
 
 DROP TABLE IF EXISTS _SKILL_STAT_BUFF_DEBUFF;
@@ -1933,10 +2161,30 @@ select id, skill, gen_desc, effect_num from desc_gen_statup;
 
 select 
 id,
+skill,
 effect1_basiclv,
+effect1_reserved1,
 effect1_reserved2,
+effect1_reserved3,
 effect1_reserved4,
-effect1_reserved6 offhand_min_damage,
+effect1_reserved5,
+effect1_reserved6 offhand_min_dmg,
+effect1_reserved7,
+effect1_reserved8,
+effect1_reserved9,
+effect1_reserved10,
+effect1_reserved11,
+effect1_reserved12,
+effect1_reserved13,
+effect1_reserved14,
+effect1_reserved15,
+effect1_reserved16,
+effect1_reserved17,
+effect1_reserved18,
+effect1_reserved19,
+effect1_reserved20,
+effect1_reserved21,
+effect1_reserved22,
 *
 from _SKILLS_WITH_NAME_NORMALIZED 
 where lower(effect1_type) = 'wpn_dual'
@@ -1957,8 +2205,28 @@ skill,
 effect_num,
 
 effect1_basiclv,
+effect1_reserved1,
 effect1_reserved2 dmg_pct_increase,
+effect1_reserved3,
+effect1_reserved4,
 effect1_reserved5 weapon,
+effect1_reserved6,
+effect1_reserved7,
+effect1_reserved8,
+effect1_reserved9,
+effect1_reserved10,
+effect1_reserved11,
+effect1_reserved12,
+effect1_reserved13,
+effect1_reserved14,
+effect1_reserved15,
+effect1_reserved16,
+effect1_reserved17,
+effect1_reserved18,
+effect1_reserved19,
+effect1_reserved20,
+effect1_reserved21,
+effect1_reserved22,
 *
 from _SKILLS_WITH_NAME_NORMALIZED 
 where lower(effect1_type) = 'wpn_mastery'
@@ -2406,6 +2674,146 @@ where name like 'CH\_%' escape '\'
 select *
 from _SKILLS_WITH_NAME_NORMALIZED skills
 where name like 'CH\_%' escape '\' or class = 'CHANTER'
+
+with effects as (
+select distinct lower(effect1_type) type
+from _SKILLS_WITH_NAME_NORMALIZED skills
+)
+select effects.type, -9 num, 'SELECT' from effects union all
+select effects.type, -8 num, 'id,' from effects union all
+select effects.type, -7 num, 'name,' from effects union all
+select effects.type, -6 num, 'skill,' from effects union all
+select effects.type, -5 num, 'effect_num,' from effects union all
+select effects.type, -4 num, 'NULL gen_desc,' from effects union all
+select effects.type, 001 num, 'effect1_reserved1,' from effects union all
+select effects.type, 002 num, 'effect1_reserved2,' from effects union all
+select effects.type, 003 num, 'effect1_reserved3,' from effects union all
+select effects.type, 004 num, 'effect1_reserved4,' from effects union all
+select effects.type, 005 num, 'effect1_reserved5,' from effects union all
+select effects.type, 006 num, 'effect1_reserved6,' from effects union all
+select effects.type, 007 num, 'effect1_reserved7,' from effects union all
+select effects.type, 008 num, 'effect1_reserved8,' from effects union all
+select effects.type, 009 num, 'effect1_reserved9,' from effects union all
+select effects.type, 010 num, 'effect1_reserved10,' from effects union all
+select effects.type, 011 num, 'effect1_reserved11,' from effects union all
+select effects.type, 012 num, 'effect1_reserved12,' from effects union all
+select effects.type, 013 num, 'effect1_reserved13,' from effects union all
+select effects.type, 014 num, 'effect1_reserved14,' from effects union all
+select effects.type, 015 num, 'effect1_reserved15,' from effects union all
+select effects.type, 016 num, 'effect1_reserved16,' from effects union all
+select effects.type, 017 num, 'effect1_reserved17,' from effects union all
+select effects.type, 018 num, 'effect1_reserved18,' from effects union all
+select effects.type, 019 num, 'effect1_reserved19,' from effects union all
+select effects.type, 020 num, 'effect1_reserved20,' from effects union all
+select effects.type, 021 num, 'effect1_reserved21,' from effects union all
+select effects.type, 022 num, 'effect1_reserved22,' from effects union all
+select effects.type, 023 num, 'effect1_acc_mod1,' from effects union all
+select effects.type, 024 num, 'effect1_acc_mod2,' from effects union all
+select effects.type, 025 num, 'effect1_basiclv,' from effects union all
+select effects.type, 026 num, 'effect1_checkforchain,' from effects union all
+select effects.type, 027 num, 'effect1_checktime,' from effects union all
+select effects.type, 028 num, 'effect1_cond_attack_dir,' from effects union all
+select effects.type, 029 num, 'effect1_cond_attack_dir_prob1,' from effects union all
+select effects.type, 030 num, 'effect1_cond_attack_dir_prob2,' from effects union all
+select effects.type, 031 num, 'effect1_cond_preeffect,' from effects union all
+select effects.type, 032 num, 'effect1_cond_preeffect_prob1,' from effects union all
+select effects.type, 033 num, 'effect1_cond_preeffect_prob2,' from effects union all
+select effects.type, 034 num, 'effect1_cond_race,' from effects union all
+select effects.type, 035 num, 'effect1_cond_race_prob1,' from effects union all
+select effects.type, 036 num, 'effect1_cond_race_prob2,' from effects union all
+select effects.type, 037 num, 'effect1_cond_status,' from effects union all
+select effects.type, 038 num, 'effect1_cond_status_prob1,' from effects union all
+select effects.type, 039 num, 'effect1_cond_status_prob2,' from effects union all
+select effects.type, 040 num, 'effect1_critical_add_dmg_mod2,' from effects union all
+select effects.type, 041 num, 'effect1_critical_prob_mod1,' from effects union all
+select effects.type, 042 num, 'effect1_critical_prob_mod2,' from effects union all
+select effects.type, 043 num, 'effect1_effectid,' from effects union all
+select effects.type, 044 num, 'effect1_hidemsg,' from effects union all
+select effects.type, 045 num, 'effect1_hop_a,' from effects union all
+select effects.type, 046 num, 'effect1_hop_b,' from effects union all
+select effects.type, 047 num, 'effect1_hop_type,' from effects union all
+select effects.type, 048 num, 'effect1_noresist,' from effects union all
+select effects.type, 049 num, 'effect1_randomtime,' from effects union all
+select effects.type, 050 num, 'effect1_remain1,' from effects union all
+select effects.type, 051 num, 'effect1_remain2,' from effects union all
+select effects.type, 052 num, 'effect1_target_type,' from effects union all
+select effects.type, 053 num, 'effect1_type,' from effects union all
+select effects.type, 054 num, 'effect1_reserved_cond1,' from effects union all
+select effects.type, 055 num, 'effect1_reserved_cond1_prob1,' from effects union all
+select effects.type, 056 num, 'effect1_reserved_cond1_prob2,' from effects union all
+select effects.type, 057 num, 'effect1_reserved_cond2,' from effects union all
+select effects.type, 058 num, 'effect1_reserved_cond2_prob1,' from effects union all
+select effects.type, 059 num, 'effect1_reserved_cond2_prob2' from effects union all
+select effects.type, 1001 num, 'FROM _SKILLS_WITH_NAME_NORMALIZED skills WHERE lower(effect1_type) = '''||effects.type||''';' from effects union 
+select effects.type, 9999 num, '' from effects
+order by 1, 2
+;
+
+
+SELECT
+id,
+skill,
+effect_num,
+effect1_reserved1,
+effect1_reserved2,
+effect1_reserved3,
+effect1_reserved4,
+effect1_reserved5,
+effect1_reserved6,
+effect1_reserved7,
+effect1_reserved8,
+effect1_reserved9,
+effect1_reserved10,
+effect1_reserved11,
+effect1_reserved12,
+effect1_reserved13,
+effect1_reserved14,
+effect1_reserved15,
+effect1_reserved16,
+effect1_reserved17,
+effect1_reserved18,
+effect1_reserved19,
+effect1_reserved20,
+effect1_reserved21,
+effect1_reserved22,
+effect1_acc_mod1,
+effect1_acc_mod2,
+effect1_basiclv,
+effect1_checkforchain,
+effect1_checktime,
+effect1_cond_attack_dir,
+effect1_cond_attack_dir_prob1,
+effect1_cond_attack_dir_prob2,
+effect1_cond_preeffect,
+effect1_cond_preeffect_prob1,
+effect1_cond_preeffect_prob2,
+effect1_cond_race,
+effect1_cond_race_prob1,
+effect1_cond_race_prob2,
+effect1_cond_status,
+effect1_cond_status_prob1,
+effect1_cond_status_prob2,
+effect1_critical_add_dmg_mod2,
+effect1_critical_prob_mod1,
+effect1_critical_prob_mod2,
+effect1_effectid,
+effect1_hidemsg,
+effect1_hop_a,
+effect1_hop_b,
+effect1_hop_type,
+effect1_noresist,
+effect1_randomtime,
+effect1_remain1,
+effect1_remain2,
+effect1_target_type,
+effect1_type,
+effect1_reserved_cond1,
+effect1_reserved_cond1_prob1,
+effect1_reserved_cond1_prob2,
+effect1_reserved_cond2,
+effect1_reserved_cond2_prob1,
+effect1_reserved_cond2_prob2
+FROM _SKILLS_WITH_NAME_NORMALIZED skills WHERE lower(effect1_type) = 'xpboost';
 /*
 (null)
 110282
@@ -2432,7 +2840,7 @@ blind
 boostdroprate
 boosthate
 boosthealeffect
-boostskillcastingtime [DONE]
+boostskillcastingtime
 boostskillcost
 boostspellattackeffect
 buffbind
@@ -2440,6 +2848,7 @@ buffsilence
 buffstun
 carvesignet
 caseheal
+caseskill
 casestatup
 closeaerial
 combinepointboost
@@ -2511,7 +2920,7 @@ petorderuseultraskill
 petrification
 poison
 polymorph
-procatk_instant [DONE]
+procatk_instant
 procdpheal_instant
 procfpheal_instant
 procheal_instant
@@ -2549,15 +2958,15 @@ sleep
 slow
 snare
 spellatk
-spellatk_instant [DONE]
+spellatk_instant
 spellatkdrain
 spellatkdrain_instant
 spin
 stagger
-statboost [DONE]
+statboost
 statdown
 statreform
-statup [DONE]
+statup
 stumble
 stun
 subtypeboostresist
@@ -2579,67 +2988,10 @@ utility
 weaponstatboost
 weaponstatup
 wpn_dual
-wpn_mastery [DONE]
+wpn_mastery
 xpboost
 */
 
-/* chanter
-wpn_mastery [DONE]
-amr_mastery
-shieldmastery
-statboost [DONE]
-extendaurarange
-statup [DONE]
-skillatk_instant [DONE]
-boostskillcastingtime [DONE]
-statdown [DONE]
-bind [DONE]
-snare [DONE]
-stun [DONE]
-dispeldebuff [DONE]
-heal_instant [DONE]
-mpheal_instant [DONE]
-evade [DONE]
-provoker [DONE]
-aura [DONE]
-shield [DONE]
-heal [DONE]
-randommoveloc
-boosthate
-dispel
-alwaysparry
-slow [DONE]
-spellatk
-healcastoronattacked
-mpheal [DONE]
-procfpheal_instant
-procmpheal_instant
-procheal_instant [Not class]
-procatk_instant [DONE]
-onetimeboosthealeffect
-onetimeboostskillattack [Not class]
-fpheal[DONE]
-deboosthealamount [DONE]
-*/
-
-/* passives only
-Wpn_Mastery
-Amr_Mastery
-Utility
-Wpn_Dual
-ShieldMastery
-CondSkillLauncher
-StatBoost
-WeaponStatBoost
-Provoker
-DeBoostHealAmount
-SubTypeBoostResist
-ExtendAuraRange
-BoostSpellAttackEffect
-BoostHate
-BoostHealEffect
-WeaponStatUp
-*/
 
 
 select distinct 'insert into _CONDITIONAL_ATTACK values('''||lower(effect1_reserved16)||''', '' '');'

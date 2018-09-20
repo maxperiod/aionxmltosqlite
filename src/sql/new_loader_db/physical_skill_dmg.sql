@@ -8,8 +8,8 @@ strings.body || ' Lv ' || chain_category_level skill_name,
 --coalesce(str_eu.body, skills.desc) || case when chain_category_level is not null then ' Lv ' || chain_category_level else '' end skill_EU,
 effect1_type, 
 effect1_reserved4 + coalesce(effect1_reserved3, 0) damage,
-effect1_reserved3 upgrade_dmg_bonus,
-
+--effect1_reserved3 upgrade_dmg_bonus,
+delay_time / 1000 cooldown,
 
 --effect1_acc_mod1, 
 effect1_acc_mod2 acc_mod, 
@@ -18,6 +18,11 @@ effect1_critical_prob_mod2 critical_prob_mod,
 case when pvp_damage_ratio is null then '100%' else pvp_damage_ratio||'%' end pvp_damage_ratio,
 
 coalesce(counter_skill,'')||coalesce(target_valid_status1,'')||coalesce(target_valid_status2,'')||coalesce(target_valid_status3,'')||coalesce(target_valid_status4,'') usage_condition,
+
+case when effect1_reserved16 = 0 then null
+     when effect1_reserved16 is not null then effect1_reserved10 + coalesce(effect1_reserved9, 0) 
+     when effect1_reserved22 is not null then effect1_reserved21 + coalesce(effect1_reserved20, 0) 
+end bonus_dmg,
 
 case when coalesce(effect1_reserved16, effect1_reserved22) = '0' then null
      when coalesce(effect1_reserved16, effect1_reserved22) = '_dmg_race_type_A' then 'Warrior-type'
@@ -28,14 +33,13 @@ case when coalesce(effect1_reserved16, effect1_reserved22) = '0' then null
      else coalesce(effect1_reserved16, effect1_reserved22)
 end bonus_dmg_condition,
 
-case when effect1_reserved16 = 0 then null
-     when effect1_reserved16 is not null then effect1_reserved10 + coalesce(effect1_reserved9, 0) 
-     when effect1_reserved22 is not null then effect1_reserved21 + coalesce(effect1_reserved20, 0) 
-end conditional_damage,
+
+/*
 case when effect1_reserved16 = 0 then null
      when effect1_reserved16 is not null then effect1_reserved9 
      when effect1_reserved22 is not null then effect1_reserved20
 end upgrade_conditional_damage_bonus,
+*/
 --effect1_reserved9 upgrade_conditional_damage_bonus, 
 
 
@@ -98,9 +102,16 @@ and effect1_type in (
 'BA'
 )
 )*/
+--and (upper(substr(skills.name, 1, 3)) = 'CH_' or learn_class = 'CHANTER')
+--and (upper(substr(skills.name, 1, 3)) = 'PR_' or learn_class = 'PRIEST')
+--and (upper(substr(skills.name, 1, 3)) = 'FI_' or learn_class = 'FIGHTER')
+--and (upper(substr(skills.name, 1, 3)) = 'KN_' or learn_class = 'KNIGHT')
+and (upper(substr(skills.name, 1, 3)) = 'RA_' or learn_class = 'RANGER')
+--and (upper(substr(skills.name, 1, 3)) = 'AS_' or learn_class = 'ASSASSIN')
+
 --and (upper(substr(skills.name, 1, 3)) in ('CL_', 'CH_') or learn_class in ('CLERIC', 'CHANTER')) and coalesce(learn_class, '') <> 'PRIEST'
 --and (upper(substr(skills.name, 1, 3)) in ('CL_', 'PR_') or learn_class in ('CLERIC', 'PRIEST')) and coalesce(learn_class, '') <> 'CHANTER'
-and (upper(substr(skills.name, 1, 3)) in ('FI_') or learn_class in ('WARRIOR', 'FIGHTER')) and coalesce(learn_class, '') <> 'KNIGHT'
+--and (upper(substr(skills.name, 1, 3)) in ('FI_') or learn_class in ('WARRIOR', 'FIGHTER')) and coalesce(learn_class, '') <> 'KNIGHT'
 --and (upper(substr(skills.name, 1, 3)) in ('WA_', 'KN_') or learn_class in ('WARRIOR', 'KNIGHT')) and coalesce(learn_class, '') <> 'FIGHTER'
 --and (upper(substr(skills.name, 1, 3)) in ('SC_','RA_') or learn_class in ('SCOUT', 'RANGER')) and coalesce(learn_class, '') <> 'ASSASSIN'
 --and (upper(substr(skills.name, 1, 3)) in ('SC_','AS_') or learn_class in ('SCOUT', 'ASSASSIN')) and coalesce(learn_class, '') <> 'RANGER'
